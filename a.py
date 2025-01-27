@@ -1,0 +1,20 @@
+import re
+
+from cryptography.fernet import Fernet
+
+# Key and encrypted text provided
+key = b"cZN97xxRa4RS4-qrH998X2ZXOe17rPhgChbRCHiUeYE="
+encrypted_text = b"gAAAAABnKEoppXFQx2luL_9GQdq8WwUGMIAGE2_lGVYWaLpbVgy5VOWKw4XAxQExQhoKPOpXFbtZqLrO3OZEzLnTfWGGScLHjJ7Is69qOrIM1BuLN8dzoQ1yiUdKQDSdqO1p8ZhonE9o3fAnXUPt8CDLUD6VG20Nv0sMUP23OFJGYDpXOZJV3kd8hp7pbfTtwZCA71RixmSkD4vzRq7k6RsqitSLCWB4NTYxt7Kubu3_kJ6gtIH8rcYglV7U6sII7qj1P3wt09hZK8uY9q0goKgDvzvwAoaqRfI7tqPjhVP32L6-haf5xsFN_PFaPSko8pncL3rO2tbOLFyzuxMsN42jLb6SadD4fmwE20-Lrini4HPHpg5zDGdGaRswitCSQuTl01zzcK9A7UxdY0EsB_aDmeSHq-GuNZLJIRVJzBEbPIOnsHbi4BtPnlKfOMrc59qf_WbtfPJ9_4VqlgVFchluPe9idh1Uus0dB193LotbwS0YNteOlbvF4N3pR0VgA4fkBi5QC__CpNJxT5hytCphEbYBuqz_00V59JMpcSdEwff5JRLzRomSydz5Aqsw6HIgT9BV_jySsxuwqpEMZt9oJ3cgZkL6LCYg616PsY4n4Nu5SSWkauSlGeYLSdJEY0nfBsE89CU_2RgVfFwVWTYgh1MdfWDs0Xoq6sr01oOTr3ALrX8k5nXbq4b6mQz4yGorycJsRD5zvZLLH5kN9RxMLHOwZpi4ZMpy_BkM3WvL7D3cQi1Fw4BH0m_tq_1_21OktOePbnDSlw51C_VFnd7xvBySreb3fyVxqJvb_Tb2guL1A3vk1bSNbNjxvwDm3o57w1uQrYcj1PKlvxPQ52hLyMnvuS56JgfmYXEO-aagb_40K-d_La-KR3sEPSTesm0RwngVl6JUAC5vWbye5XIzHVMJoiGs7YeO9zSVv680m_X50vWjw6zBv_U_gSh5qdSdtCOD5V1X"
+
+# Initialize Fernet with the key
+cipher_suite = Fernet(key)
+
+# Decrypt the message
+decrypted_text = cipher_suite.decrypt(encrypted_text).decode()
+
+# Replace unicode representations with actual emojis
+# This regex finds unicode representations like "\U0001F600" in the string
+emoji_replaced_text = re.sub(r'\\U[0-9A-Fa-f]{8}', lambda x: chr(int(x.group(0)[2:], 16)), decrypted_text)
+
+# Final output with emojis
+print("Decrypted and Emoji-Replaced Text:", emoji_replaced_text)
